@@ -12,12 +12,6 @@
 - def mid_to_MChain(): mid文件转化为马尔科夫链,储存在.json文件中
 - def MChain_to_chord(): 用马尔科夫链生成随机音乐
 
-## 可执行程序部分
-
-### pyMC.exe
-
-- 使用命令行打开，在当前目录下，输入pyMC -h 获取帮助
-
 ### 依赖库部分
 
 - [requirement.txt](requirement.txt)
@@ -35,7 +29,3 @@
   - [bitmidi](https://bitmidi.com/)
 
 - 其他素材
-
-## 注意
-
-- 如果想要合并多条音轨，或者几个文件的旋律音轨的序号不同，需要用python重新编写代码
