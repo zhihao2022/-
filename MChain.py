@@ -7,7 +7,7 @@ import random
 class MCain:
     def __init__(self, n = 1):
         # 链的阶数
-        self.n = n
+        self.n = int(n)
 
         # 链的主体
         self.MC = {}
@@ -103,6 +103,7 @@ def mid_to_MChain(filename_list, MC_n = 1, track_num = 0, with_time = False):
 
         for i in range(len(music)):
             # 去掉节奏设置
+
             if str(type(music[i])) == "<class 'musicpy.structures.tempo'>":
                 continue
             st.append(music[i])
@@ -120,7 +121,7 @@ def mid_to_MChain(filename_list, MC_n = 1, track_num = 0, with_time = False):
 
         # 写入.json文件
         filename = filename.split('.')[0]
-        MC_name = filename + '_MC' + file_past_name + '.json'
+        MC_name = filename +'_'+str(MC_n) + '_MC' + file_past_name+ '.json'
         MC.fout(MC_name)
 
     # 若输入了一个列表的文件
@@ -139,7 +140,7 @@ def mid_to_MChain(filename_list, MC_n = 1, track_num = 0, with_time = False):
             tim = []
             for i in range(len(music)):
                 # 去掉节奏设置
-                if str(type(music[i])) == "<class 'musicpy.structures.tempo'>":
+                if str(type(music[i])) != "<class 'musicpy.structures.note'>":
                     continue
 
                 st.append(music[i])
@@ -156,13 +157,14 @@ def mid_to_MChain(filename_list, MC_n = 1, track_num = 0, with_time = False):
         MC.r_to_1()
 
         # 写入.json文件
-        MC_name = fout_name + 'MC' + file_past_name + '.json'
+        MC_name = fout_name+str(MC_n)+'_' + 'MC' + file_past_name+ '.json'
         MC.fout(MC_name)
     return MC_name
 
 # MChain生成旋律
-def MChain_to_chord(MC_name, note_start_name, n = 1, music_len = 100, with_time = False, save_as_mid = True, time_single = 0.25):
+def MChain_to_chord(MC_name, note_start_name, n = 1, music_len = 500, with_time = False, save_as_mid = True, time_single = 0.25):
     MC = {}
+    n = int(n)
     result = mp.chord([])
     # 读出MC
     with open(MC_name, 'r') as f:
@@ -251,10 +253,11 @@ def MChain_to_chord(MC_name, note_start_name, n = 1, music_len = 100, with_time 
         mid_name = ''
         MC_name_list = MC_name.split('_')
         for i in range(len(MC_name_list)):
-            if MC_name_list[i] == 'MC.json' or MC_name_list[i] == 'MC_with_time.json':
+            if MC_name_list[i] == 'MC.json' or MC_name_list[i] in ['MC','with','time.json']:
                 break
             if i == 0:
                 mid_name = MC_name_list[i]
+                continue
             mid_name = mid_name + '_' + MC_name_list[i]
 
         if with_time:
